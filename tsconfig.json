@@ -1,0 +1,12 @@
+{ 
+    "compilerOptions": {
+        "allowJs": true,
+        "checkJs": true,
+        "downlevelIteration": true,
+        "types": ["google-apps-script"],
+        "lib": [
+            "es6",
+            "es2017",
+          ],
+      }
+} 
