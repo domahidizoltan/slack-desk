@@ -2,7 +2,7 @@ const ss = SpreadsheetApp.getActiveSpreadsheet()
 const template = ss.getSheetByName("template")
 
 namespace AppConfig {
-    const configRange = "A36:B39"
+    const configRange = "A36:B40"
     
     export function getConfig(): Map<string, string> {
         let values = template.getRange(configRange).getValues()
@@ -14,6 +14,7 @@ const TOTAL_TABLES = "TOTAL_TABLES"
 const NON_WORKING_DAY_BG_CELL = "NON_WORKING_DAY_BG_CELL"
 const HOLIDAYS_CALENDAR = "HOLIDAYS_CALENDAR"
 const EXTRA_WORKDAY_TITLE = "EXTRA_WORKDAY_TITLE"
+const LOG_SLACK_POST = "LOG_SLACK_POST"
 const config = AppConfig.getConfig()
 
 function testConfig() {

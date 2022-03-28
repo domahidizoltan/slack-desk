@@ -1,1 +1,3 @@
 .clasp.json
+appConfig.json
+env.ts

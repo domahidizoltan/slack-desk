@@ -5,7 +5,7 @@ namespace AppConfig {
 
   export class Sheet {
 
-    public static createMonthlySheet(date: Date): void {
+    static createMonthlySheet(date: Date): void {
       let sheetName = this.getSheetName(date)
       if (ss.getSheetByName(sheetName)) {
         throw new Error(`Sheet not found: ${sheetName}`);
@@ -14,7 +14,7 @@ namespace AppConfig {
       this.cloneTemplate(date)    
     }
     
-    public static deleteMonthlySheet(date: Date): void {
+    static deleteMonthlySheet(date: Date): void {
       let sheetName = this.getSheetName(date)
       let sheet = ss.getSheetByName(sheetName)
       if (sheet) {
@@ -22,7 +22,7 @@ namespace AppConfig {
       }
     }
 
-    public static doForRows(startDate: Date, endDate: Date, action: RangeAction, limit?: number, column?: number): Map<Date, string> {
+    static doForRows(startDate: Date, endDate: Date, action: RangeAction, limit?: number, column?: number): Map<Date, string> {
       let results = new Map<Date, string>()
       let nonWorkingDays = AppConfig.Calendar.getNonWorkingDays(startDate, endDate).map(d => d.toDateString())
       let columns = Number(config.get(TOTAL_TABLES)) + 1
@@ -82,17 +82,29 @@ namespace AppConfig {
       return results
     }
 
-    public static getDateForCell(range: RangeAlias): Date {
+    static getDateForCell(range: RangeAlias): Date {
       let day = Number(range.getRow()) - 1
       let name = range.getSheet().getName().split("-")
       let date = new Date(`${name[1]}/${day}/20${name[0]}`)
       return date
     }
 
-    public static getColumnHeaderForCell(range: RangeAlias): string {
+    static getColumnHeaderForCell(range: RangeAlias): string {
       let col = range.getColumn()
       let columnHeader = range.getSheet().getRange(1, col).getValue().toString()
       return columnHeader
+    }
+
+    static log(msgType: string, msg: string) {
+      if (config.get(LOG_SLACK_POST).toLowerCase() == "true") {
+        let logSheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("log")
+        logSheet.insertRowBefore(1)
+    
+        let now = new Date()
+        logSheet.getRange(1, 1).setValue(`${now.toLocaleTimeString()} ${now.toLocaleDateString()}`)
+        logSheet.getRange(1, 2).setValue(msgType)
+        logSheet.getRange(1, 3).setValue(msg)
+      }
     }
     
     private static getSheetName(date: Date): string {
