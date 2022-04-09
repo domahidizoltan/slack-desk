@@ -11,7 +11,7 @@
 			"type": "section",
 			"text": {
 				"type": "mrkdwn",
-				"text": "Today:\t\t\t\tDesk *1.*"
+				"text": "Today:\t<?= v.todayBookedDesk ?>"
 			},
 			"accessory": {
 				"type": "button",
@@ -20,15 +20,15 @@
 					"text": "Delete"
 				},
 				"style": "danger",
-				"value": "click_me_123",
-				"action_id": "button-action"
+				"value": "<?= v.todayDate ?>",
+				"action_id": "delete_booking"
 			}
 		},
 		{
 			"type": "section",
 			"text": {
 				"type": "mrkdwn",
-				"text": "17/03:\tDesk *15.*"
+				"text": "<?= v.nextDate ?>:\t<?= v.nextBookedDesk ?>"
 			},
 			"accessory": {
 				"type": "button",
@@ -37,8 +37,8 @@
 					"text": "Delete"
 				},
 				"style": "danger",
-				"value": "click_me_123",
-				"action_id": "button-action"
+				"value": "<?= v.nextDate ?>",
+				"action_id": "delete_booking"
 			}
 		},
 		{
@@ -55,8 +55,8 @@
 						"emoji": true
 					},
 					"style": "primary",
-					"value": "click_me_123",
-					"action_id": "actionId-0"
+					"value": " ",
+					"action_id": "book_tables"
 				},
 				{
 					"type": "button",
@@ -66,8 +66,8 @@
 						"emoji": true
 					},
 					"style": "danger",
-					"value": "click_me_123",
-					"action_id": "actionId-1"
+					"value": " ",
+					"action_id": "delete_bookings"
 				}
 			]
 		}

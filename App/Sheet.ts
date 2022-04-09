@@ -1,7 +1,7 @@
 type RangeAlias = GoogleAppsScript.Spreadsheet.Range
 type RangeAction = (range: RangeAlias) => boolean
 
-namespace AppConfig {
+namespace App {
 
   export class Sheet {
 
@@ -24,7 +24,7 @@ namespace AppConfig {
 
     static doForRows(startDate: Date, endDate: Date, action: RangeAction, limit?: number, column?: number): Map<Date, string> {
       let results = new Map<Date, string>()
-      let nonWorkingDays = AppConfig.Calendar.getNonWorkingDays(startDate, endDate).map(d => d.toDateString())
+      let nonWorkingDays = App.Calendar.getNonWorkingDays(startDate, endDate).map(d => d.toDateString())
       let columns = Number(config.get(TOTAL_TABLES)) + 1
       let sheetName = this.getSheetName(startDate)
       let sheet = ss.getSheetByName(sheetName)
@@ -148,7 +148,7 @@ namespace AppConfig {
       let rows = monthEnd.getDate() + 1
       let columns = Number(config.get(TOTAL_TABLES)) + 1
 
-      let nonWorkingDays = AppConfig.Calendar.getNonWorkingDays(monthStart, monthEnd).map(d => d.toDateString())
+      let nonWorkingDays = App.Calendar.getNonWorkingDays(monthStart, monthEnd).map(d => d.toDateString())
       let nonWorkingDayCell = template.getRange(config.get(NON_WORKING_DAY_BG_CELL))
       for (let idx = 1; idx < rows; idx++) {
         let day = new Date(date.getFullYear(), date.getMonth(), idx).toDateString()
@@ -166,13 +166,13 @@ namespace AppConfig {
 
 
 function testSheet() {
-  AppConfig.Sheet.deleteMonthlySheet(new Date(2022, 1))
-  AppConfig.Sheet.deleteMonthlySheet(new Date(2022, 2))
-  AppConfig.Sheet.deleteMonthlySheet(new Date(2022, 3))
-  AppConfig.Sheet.deleteMonthlySheet(new Date(2022, 4))
+  App.Sheet.deleteMonthlySheet(new Date(2022, 1))
+  App.Sheet.deleteMonthlySheet(new Date(2022, 2))
+  App.Sheet.deleteMonthlySheet(new Date(2022, 3))
+  App.Sheet.deleteMonthlySheet(new Date(2022, 4))
 
-  AppConfig.Sheet.createMonthlySheet(new Date(2022, 4))
-  AppConfig.Sheet.createMonthlySheet(new Date(2022, 1))
-  AppConfig.Sheet.createMonthlySheet(new Date(2022, 3))
-  AppConfig.Sheet.createMonthlySheet(new Date(2022, 2))
+  App.Sheet.createMonthlySheet(new Date(2022, 4))
+  App.Sheet.createMonthlySheet(new Date(2022, 1))
+  App.Sheet.createMonthlySheet(new Date(2022, 3))
+  App.Sheet.createMonthlySheet(new Date(2022, 2))
 }

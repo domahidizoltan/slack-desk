@@ -1,4 +1,4 @@
-namespace AppConfig {
+namespace App {
 
   export class Booking {
 
@@ -6,14 +6,14 @@ namespace AppConfig {
       this.validateDates(startDate, endDate)
 
       let bookedBySamePerson = (range: RangeAlias) => range.getValue().toString() == personName
-      return AppConfig.Sheet.doForRows(startDate, endDate || startDate, bookedBySamePerson, limit)
+      return App.Sheet.doForRows(startDate, endDate || startDate, bookedBySamePerson, limit)
     }
 
     static getForTable(table: string, startDate: Date, endDate?: Date, limit?: number): Map<Date, string> {
       this.validateDates(startDate, endDate)
 
       let isBooked = (range: RangeAlias) => !!range.getValue().toString()
-      return AppConfig.Sheet.doForRows(startDate, endDate || startDate, isBooked, limit, Number(table))
+      return App.Sheet.doForRows(startDate, endDate || startDate, isBooked, limit, Number(table))
     }
 
     static getFreeTables(startDate: Date, endDate?: Date): Map<Date, string> {
@@ -23,11 +23,11 @@ namespace AppConfig {
       let results = new Map<Date, string>()
       let resultsDateStr: string[] = []
       let getFreeTables = (range: RangeAlias) => {
-        let date = AppConfig.Sheet.getDateForCell(range)
+        let date = App.Sheet.getDateForCell(range)
         if (resultsDateStr.indexOf(date.toDateString()) == -1) {
           let isBooked = !!range.getValue().toString()
           if (!isBooked) {
-            let table = AppConfig.Sheet.getColumnHeaderForCell(range)
+            let table = App.Sheet.getColumnHeaderForCell(range)
             results.set(date, table)
             resultsDateStr.push(date.toDateString())
           }
@@ -37,9 +37,9 @@ namespace AppConfig {
 
       let totalTables = Number(config.get(TOTAL_TABLES))
       let table = 1
-      let days = AppConfig.Calendar.getDays(startDate, endDt)
+      let days = App.Calendar.getDays(startDate, endDt)
       while (resultsDateStr.length < days && table < totalTables) {
-        AppConfig.Sheet.doForRows(new Date(startDate), endDt, getFreeTables, null, table++)
+        App.Sheet.doForRows(new Date(startDate), endDt, getFreeTables, null, table++)
       }
 
       return new Map([...results].sort((a, b) => a[0].getTime() - b[0].getTime() ))
@@ -55,7 +55,7 @@ namespace AppConfig {
         }
         return condition
       }
-      return AppConfig.Sheet.doForRows(startDate, endDate || startDate, deleteWithSameName)
+      return App.Sheet.doForRows(startDate, endDate || startDate, deleteWithSameName)
     }
     
     static bookTable(personName: string, table: string, startDate: Date, endDate?: Date): Map<Date, string> {
@@ -66,8 +66,8 @@ namespace AppConfig {
         let isNotBooked = !!!range.getValue().toString()
         if (isNotBooked) {
           range.setValue(personName)
-          let bookedTable = AppConfig.Sheet.getColumnHeaderForCell(range)
-          let date = AppConfig.Sheet.getDateForCell(range)
+          let bookedTable = App.Sheet.getColumnHeaderForCell(range)
+          let date = App.Sheet.getDateForCell(range)
           results.set(date, bookedTable)
         }
         return isNotBooked
@@ -76,11 +76,11 @@ namespace AppConfig {
       if (table === "?") {
         this.getFreeTables(startDate, endDate || startDate).forEach(
           (tbl, dt) => {
-            AppConfig.Sheet.doForRows(new Date(dt), new Date(dt), bookTable, null, Number(tbl))
+            App.Sheet.doForRows(new Date(dt), new Date(dt), bookTable, null, Number(tbl))
           }
         )
       } else {
-        AppConfig.Sheet.doForRows(startDate, endDate || startDate, bookTable, null, Number(table))
+        App.Sheet.doForRows(startDate, endDate || startDate, bookTable, null, Number(table))
       }
 
       return results
@@ -109,7 +109,7 @@ function testBooking() {
   // delRes.forEach((v, k) => {console.log(`${k.toDateString()} => ${v}`)})
 
   
-   let addRes = AppConfig.Booking.bookTable("test", "?", new Date(2022, 2, 30), new Date(2022, 3, 5))
+   let addRes = App.Booking.bookTable("test", "?", new Date(2022, 2, 30), new Date(2022, 3, 5))
    addRes.forEach((v, k) => {console.log(`${k.toDateString()} => ${v}`)})
 
   // let getFRes = App.Booking.getFreeTables(new Date(2022, 2, 30), new Date(2022, 3, 5))

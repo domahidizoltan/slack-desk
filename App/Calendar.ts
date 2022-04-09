@@ -1,4 +1,4 @@
-namespace AppConfig {
+namespace App {
   let calendar: GoogleAppsScript.Calendar.Calendar
 
   export class Calendar {
@@ -47,6 +47,6 @@ namespace AppConfig {
 }
 
 function testCalendar() {
-  let days = AppConfig.Calendar.getNonWorkingDays(new Date(2022, 02, 7), new Date(2022, 02, 27))
+  let days = App.Calendar.getNonWorkingDays(new Date(2022, 02, 7), new Date(2022, 02, 27))
   console.log(days)
 }
