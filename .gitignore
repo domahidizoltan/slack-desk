@@ -2,3 +2,4 @@
 appConfig.json
 env.ts
 temp/
+.DS_Store

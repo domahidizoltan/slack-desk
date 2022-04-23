@@ -8,29 +8,40 @@
 			}
 		},
 		{
-			"type": "actions",
-			"elements": [
-				{
-					"type": "datepicker",
-					"initial_date": "2022-03-17",
-					"placeholder": {
-						"type": "plain_text",
-						"text": "Select a date",
-						"emoji": true
-					},
-					"action_id": "actionId-0"
+			"type": "input",
+			"element": {
+				"type": "datepicker",
+				"initial_date": "<?= v.dateFrom ?>",
+				"placeholder": {
+					"type": "plain_text",
+					"text": "Select a date",
+					"emoji": true
 				},
-				{
-					"type": "datepicker",
-					"initial_date": "2022-03-17",
-					"placeholder": {
-						"type": "plain_text",
-						"text": "Select a date",
-						"emoji": true
-					},
-					"action_id": "actionId-1"
-				}
-			]
+				"action_id": "delete_bookings_from"
+			},
+			"label": {
+				"type": "plain_text",
+				"text": "From date:",
+				"emoji": true
+			}
+		},
+		{
+			"type": "input",
+			"element": {
+				"type": "datepicker",
+				"initial_date": "<?= v.dateTo ?>",
+				"placeholder": {
+					"type": "plain_text",
+					"text": "Select a date",
+					"emoji": true
+				},
+				"action_id": "delete_bookings_to"
+			},
+			"label": {
+				"type": "plain_text",
+				"text": "To date:",
+				"emoji": true
+			}
 		},
 		{
 			"type": "divider"
@@ -46,8 +57,7 @@
 						"emoji": true
 					},
 					"style": "danger",
-					"value": "click_me_123",
-					"action_id": "actionId-0"
+					"action_id": "delete_bookings"
 				}
 			]
 		}

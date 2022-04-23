@@ -48,6 +48,7 @@ https://api.slack.com/apps/{id}/general?
 > Perform actions in your workspace -> Allow
 
 
+!!!!set gcp project and oauth consent with external_request scope
 
 //slack manifest
 
@@ -65,3 +66,7 @@ https://api.slack.com/apps/{id}/general?
 + confirmation
 + lekerdezni asztal foglalasat ma es kov napra  /sd getFreeTables startDate endDate
 
+
+
+clasp push
+clasp deploy -i AKfycbxFQH9PY9ea3uTHcoE3QnVPgNwX7qQoTsUqIWvvRkiIjIJHjSTm698E0UJtp3ctcF60
